@@ -7,16 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LiftBuddy">
 <meta name="theme-color" content="#0d1f3c">
-<link rel="apple-touch-icon" id="lb-icon">
-<link rel="manifest" id="lb-manifest">
-<script>
-(function(){
-  var svg = encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='#0d1f3c' rx='80'/><rect x='96' y='228' width='320' height='56' rx='8' fill='#2563eb'/><rect x='56' y='176' width='72' height='160' rx='14' fill='white'/><rect x='384' y='176' width='72' height='160' rx='14' fill='white'/><rect x='16' y='200' width='68' height='112' rx='10' fill='#93c5fd'/><rect x='428' y='200' width='68' height='112' rx='10' fill='#93c5fd'/></svg>");
-  document.getElementById('lb-icon').href = 'data:image/svg+xml,' + svg;
-  var m = {name:"LiftBuddy",short_name:"LiftBuddy",display:"standalone",orientation:"portrait",theme_color:"#0d1f3c",background_color:"#0d1f3c",start_url:"./",icons:[{src:'data:image/svg+xml,'+svg,sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"}]};
-  document.getElementById('lb-manifest').href = URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'}));
-})();
-</script>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
 <title>LiftBuddy</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
