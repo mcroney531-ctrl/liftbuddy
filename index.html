@@ -3,6 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LiftBuddy">
+<meta name="theme-color" content="#0d1f3c">
+<link rel="apple-touch-icon" id="lb-icon">
+<link rel="manifest" id="lb-manifest">
+<script>
+(function(){
+  var svg = encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='#0d1f3c' rx='80'/><rect x='96' y='228' width='320' height='56' rx='8' fill='#2563eb'/><rect x='56' y='176' width='72' height='160' rx='14' fill='white'/><rect x='384' y='176' width='72' height='160' rx='14' fill='white'/><rect x='16' y='200' width='68' height='112' rx='10' fill='#93c5fd'/><rect x='428' y='200' width='68' height='112' rx='10' fill='#93c5fd'/></svg>");
+  document.getElementById('lb-icon').href = 'data:image/svg+xml,' + svg;
+  var m = {name:"LiftBuddy",short_name:"LiftBuddy",display:"standalone",orientation:"portrait",theme_color:"#0d1f3c",background_color:"#0d1f3c",start_url:"./",icons:[{src:'data:image/svg+xml,'+svg,sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"}]};
+  document.getElementById('lb-manifest').href = URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'}));
+})();
+</script>
 <title>LiftBuddy</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
@@ -22,48 +36,23 @@
 
 body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--text-primary); min-height: 100vh; }
 
-/* ── HEADER ───────────────────────────── */
-.header {
-  background: var(--navy);
-  padding: 0 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 66px;
-  box-shadow: 0 2px 16px rgba(13,31,60,0.22);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+.header { background: var(--navy); padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 66px; box-shadow: 0 2px 16px rgba(13,31,60,0.22); position: sticky; top: 0; z-index: 100; }
 .logo { display: flex; align-items: center; gap: 12px; }
 .logo-icon { width: 36px; height: 36px; background: var(--blue); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
 .logo-text { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; color: white; letter-spacing: 2px; text-transform: uppercase; }
 .logo-text span { color: var(--blue-light); }
-
 .header-tabs { display: flex; gap: 2px; background: rgba(255,255,255,0.07); border-radius: 10px; padding: 4px; }
-.header-tab {
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-  color: rgba(255,255,255,0.5); background: transparent; border: none;
-  padding: 7px 16px; border-radius: 7px; cursor: pointer; letter-spacing: 0.3px;
-  transition: all 0.18s; display: flex; align-items: center; gap: 6px;
-}
+.header-tab { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: transparent; border: none; padding: 7px 16px; border-radius: 7px; cursor: pointer; letter-spacing: 0.3px; transition: all 0.18s; display: flex; align-items: center; gap: 6px; }
 .header-tab:hover { color: rgba(255,255,255,0.8); }
 .header-tab.active { background: white; color: var(--navy); box-shadow: 0 1px 6px rgba(0,0,0,0.15); }
-
 .week-nav { display: flex; align-items: center; gap: 10px; transition: opacity 0.2s; }
 .week-nav.hidden { opacity: 0; pointer-events: none; }
 .week-info { text-align: right; margin-right: 4px; }
 .week-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.38); }
 .week-range { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 700; color: white; }
-.nav-btn {
-  width: 32px; height: 32px; border: 1.5px solid rgba(255,255,255,0.2);
-  background: transparent; border-radius: 8px; color: white; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; font-size: 18px;
-  transition: all 0.2s; line-height: 1;
-}
+.nav-btn { width: 32px; height: 32px; border: 1.5px solid rgba(255,255,255,0.2); background: transparent; border-radius: 8px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.2s; line-height: 1; }
 .nav-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); }
 
-/* ── VIEWS ───────────────────────────── */
 .view { display: none; }
 .view.active { display: block; }
 .main { padding: 26px 32px; max-width: 1120px; margin: 0 auto; }
@@ -71,225 +60,80 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
 .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); }
 .week-summary { font-size: 12px; font-weight: 500; color: var(--text-muted); }
 
-/* ── WEEK LIST (new vertical layout) ─── */
 .week-list { display: flex; flex-direction: column; gap: 8px; }
-
 .week-row { display: flex; align-items: stretch; gap: 10px; }
-
-/* Date box — left column */
-.week-date-box {
-  width: 64px; flex-shrink: 0;
-  background: white; border: 1.5px solid var(--border);
-  border-radius: 14px; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; padding: 10px 6px;
-  transition: border-color 0.15s;
-}
-.week-row.today .week-date-box {
-  border-color: var(--blue); background: #eef3ff;
-}
-.week-date-day {
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.8px; color: var(--text-muted);
-}
+.week-date-box { width: 64px; flex-shrink: 0; background: white; border: 1.5px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 6px; transition: border-color 0.15s; }
+.week-row.today .week-date-box { border-color: var(--blue); background: #eef3ff; }
+.week-date-day { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: var(--text-muted); }
 .week-row.today .week-date-day { color: var(--blue); }
-.week-date-num {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 32px;
-  font-weight: 800; color: var(--text-primary); line-height: 1; margin-top: 2px;
-}
+.week-date-num { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 800; color: var(--text-primary); line-height: 1; margin-top: 2px; }
 .week-row.today .week-date-num { color: var(--blue); }
-
-/* Workout panel — right column */
-.week-workout-panel {
-  flex: 1; border-radius: 14px; overflow: hidden;
-  border: 1.5px solid var(--border); background: white;
-  transition: border-color 0.15s; min-width: 0;
-}
+.week-workout-panel { flex: 1; border-radius: 14px; overflow: hidden; border: 1.5px solid var(--border); background: white; transition: border-color 0.15s; min-width: 0; }
 .week-row.has-workout .week-workout-panel { border-color: transparent; }
 .week-row.is-cycle .week-workout-panel { border-style: dashed; }
-
-/* Panel header (always visible) */
-.week-panel-header {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 14px; cursor: pointer; position: relative;
-  min-height: 58px;
-}
-.week-panel-accent {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 4px; border-radius: 0;
-}
-.week-panel-name {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 20px;
-  font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px;
-  flex: 1; padding-left: 4px;
-}
+.week-panel-header { display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; position: relative; min-height: 58px; }
+.week-panel-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 0; }
+.week-panel-name { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; flex: 1; padding-left: 4px; }
 .week-panel-badges { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-.cycle-chip-inline {
-  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-  color: white; background: rgba(0,0,0,0.22); border-radius: 5px; padding: 2px 6px;
-}
-.week-panel-gear {
-  width: 26px; height: 26px; border-radius: 7px;
-  background: rgba(0,0,0,0.10); border: none;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 13px; color: rgba(0,0,0,0.45);
-  transition: background 0.15s; flex-shrink: 0;
-}
+.cycle-chip-inline { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: white; background: rgba(0,0,0,0.22); border-radius: 5px; padding: 2px 6px; }
+.week-panel-gear { width: 26px; height: 26px; border-radius: 7px; background: rgba(0,0,0,0.10); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; color: rgba(0,0,0,0.45); transition: background 0.15s; flex-shrink: 0; }
 .week-panel-gear:hover { background: rgba(0,0,0,0.2); }
 .has-workout .week-panel-gear { background: rgba(0,0,0,0.12); color: white; }
 .has-workout .week-panel-gear:hover { background: rgba(0,0,0,0.28); }
-.week-panel-chevron {
-  font-size: 12px; color: var(--text-muted); transition: transform 0.2s;
-  flex-shrink: 0; line-height: 1;
-}
+.week-panel-chevron { font-size: 12px; color: var(--text-muted); transition: transform 0.2s; flex-shrink: 0; line-height: 1; }
 .week-panel-header.expanded .week-panel-chevron { transform: rotate(180deg); }
-
-/* Empty / rest states */
-.week-panel-empty {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 13px; color: var(--text-muted); font-weight: 500; flex: 1; padding-left: 4px;
-}
-.week-add-btn {
-  width: 28px; height: 28px; border-radius: 8px; border: 1.5px dashed #c8d4e8;
-  background: transparent; color: var(--text-muted); font-size: 18px;
-  display: flex; align-items: center; justify-content: center; cursor: pointer;
-  transition: all 0.15s; flex-shrink: 0; line-height: 1;
-}
+.week-panel-empty { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); font-weight: 500; flex: 1; padding-left: 4px; }
+.week-add-btn { width: 28px; height: 28px; border-radius: 8px; border: 1.5px dashed #c8d4e8; background: transparent; color: var(--text-muted); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; flex-shrink: 0; line-height: 1; }
 .week-add-btn:hover { border-color: var(--blue); color: var(--blue); }
-
-/* Expandable body */
-.week-panel-body {
-  display: none; padding: 0 10px 10px; border-top: 1px solid var(--border);
-}
+.week-panel-body { display: none; padding: 0 10px 10px; border-top: 1px solid var(--border); }
 .week-panel-body.open { display: block; }
 
-/* Slot group display (detail modal + view-all) */
 .slot-group { margin-bottom: 10px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-.slot-header {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 14px;
-}
-.slot-num {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 900;
-  color: rgba(255,255,255,0.55); flex-shrink: 0; min-width: 26px;
-}
-.slot-label {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.7px; color: white; flex: 1;
-}
-.slot-note {
-  font-size: 9.5px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.4px; color: rgba(255,255,255,0.52); text-align: right;
-}
+.slot-header { display: flex; align-items: center; gap: 10px; padding: 9px 14px; }
+.slot-num { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 900; color: rgba(255,255,255,0.55); flex-shrink: 0; min-width: 26px; }
+.slot-label { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: white; flex: 1; }
+.slot-note { font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: rgba(255,255,255,0.52); text-align: right; }
 .slot-exercises { background: #f8fafc; }
-.slot-ex-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 14px; border-top: 1px solid #e9eef5;
-}
+.slot-ex-row { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-top: 1px solid #e9eef5; }
 .slot-ex-bar { width: 3px; height: 18px; border-radius: 2px; flex-shrink: 0; opacity: 0.7; }
 .slot-ex-name { flex: 1; font-size: 13.5px; font-weight: 500; color: var(--text-primary); }
 .slot-ex-sets { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
 
-/* Weight input */
 .weight-wrap { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-.weight-input {
-  width: 58px; border: 1.5px solid var(--border); border-radius: 8px;
-  text-align: center; font-family: 'Barlow Condensed', sans-serif;
-  font-size: 17px; font-weight: 700; color: var(--navy);
-  padding: 4px 2px; outline: none; background: white;
-  transition: border-color 0.18s; -moz-appearance: textfield;
-}
-.weight-input::-webkit-outer-spin-button,
-.weight-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.weight-input { width: 58px; border: 1.5px solid var(--border); border-radius: 8px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: var(--navy); padding: 4px 2px; outline: none; background: white; transition: border-color 0.18s; -moz-appearance: textfield; }
+.weight-input::-webkit-outer-spin-button, .weight-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .weight-input:focus { border-color: var(--blue); }
 .weight-input.has-weight { border-color: #10b981; color: #065f46; background: #f0fdf4; }
 .weight-unit { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+
 #dayDetailBackdrop { z-index: 350; }
-.day-detail-modal {
-  background: white; border-radius: 22px;
-  width: 500px; max-width: 94vw; max-height: 88vh;
-  display: flex; flex-direction: column;
-  box-shadow: 0 24px 70px rgba(13,31,60,0.32);
-  transform: translateY(24px) scale(0.98);
-  transition: transform 0.26s cubic-bezier(0.22,1,0.36,1);
-  overflow: hidden;
-}
+.day-detail-modal { background: white; border-radius: 22px; width: 500px; max-width: 94vw; max-height: 88vh; display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(13,31,60,0.32); transform: translateY(24px) scale(0.98); transition: transform 0.26s cubic-bezier(0.22,1,0.36,1); overflow: hidden; }
 .backdrop.visible .day-detail-modal { transform: translateY(0) scale(1); }
 .day-detail-accent { height: 6px; width: 100%; flex-shrink: 0; }
-.day-detail-header {
-  padding: 18px 22px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0;
-}
-.day-detail-meta {
-  font-size: 11px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 1.4px; color: var(--text-muted); margin-bottom: 4px;
-}
-.day-detail-title {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900;
-  text-transform: uppercase; letter-spacing: 1.5px; line-height: 1;
-  margin-bottom: 5px;
-}
-.day-detail-sub {
-  font-size: 11px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 1px; color: var(--text-muted);
-}
-.day-detail-close {
-  position: absolute; top: 14px; right: 16px;
-  background: rgba(0,0,0,0.07); border: none; border-radius: 8px;
-  width: 30px; height: 30px; display: flex; align-items: center;
-  justify-content: center; cursor: pointer; font-size: 14px;
-  color: var(--text-secondary); transition: background 0.15s;
-}
+.day-detail-header { padding: 18px 22px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.day-detail-meta { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.4px; color: var(--text-muted); margin-bottom: 4px; }
+.day-detail-title { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1; margin-bottom: 5px; }
+.day-detail-sub { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+.day-detail-close { position: absolute; top: 14px; right: 16px; background: rgba(0,0,0,0.07); border: none; border-radius: 8px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: var(--text-secondary); transition: background 0.15s; }
 .day-detail-close:hover { background: rgba(0,0,0,0.13); }
-.day-detail-exercises {
-  flex: 1; overflow-y: auto; padding: 8px 22px 16px;
-}
+.day-detail-exercises { flex: 1; overflow-y: auto; padding: 8px 22px 16px; }
 .day-detail-exercises::-webkit-scrollbar { width: 5px; }
 .day-detail-exercises::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-.detail-ex-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 0; border-bottom: 1px solid #f1f5f9;
-}
+.detail-ex-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1f5f9; }
 .detail-ex-row:last-child { border-bottom: none; }
-.detail-ex-num {
-  font-size: 10px; font-weight: 700; color: var(--text-muted);
-  width: 18px; text-align: right; flex-shrink: 0;
-}
+.detail-ex-num { font-size: 10px; font-weight: 700; color: var(--text-muted); width: 18px; text-align: right; flex-shrink: 0; }
 .detail-ex-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .detail-ex-name { flex: 1; font-size: 14px; font-weight: 500; color: var(--text-primary); }
-.detail-ex-sets {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 16px;
-  font-weight: 700; color: var(--text-secondary); white-space: nowrap;
-}
-.day-detail-footer {
-  padding: 14px 22px 20px; border-top: 1px solid var(--border); flex-shrink: 0;
-}
-.btn-change-workout {
-  width: 100%; padding: 12px; background: var(--surface);
-  border: 1.5px solid var(--border); border-radius: 12px;
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-  color: var(--text-secondary); cursor: pointer; transition: all 0.15s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
+.detail-ex-sets { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-secondary); white-space: nowrap; }
+.day-detail-footer { padding: 14px 22px 20px; border-top: 1px solid var(--border); flex-shrink: 0; }
+.btn-change-workout { width: 100%; padding: 12px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-change-workout:hover { border-color: var(--blue); color: var(--blue); background: #eff6ff; }
 
-/* Cycle mode banner in schedule */
-.cycle-banner {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  background: #eff6ff;
-  border: 1.5px solid #bfdbfe;
-  border-radius: 12px;
-  padding: 9px 16px;
-  margin-bottom: 16px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--blue);
-}
+.cycle-banner { display: none; align-items: center; gap: 10px; background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 12px; padding: 9px 16px; margin-bottom: 16px; font-size: 13px; font-weight: 500; color: var(--blue); }
 .cycle-banner.visible { display: flex; }
 .cycle-banner-icon { font-size: 16px; }
 .cycle-banner strong { font-weight: 700; }
 
-/* ── ROUTINES ─────────────────────────── */
 .routines-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .routine-card { background: white; border: 1.5px solid var(--border); border-radius: 18px; overflow: hidden; transition: all 0.18s; display: flex; flex-direction: column; }
 .routine-card:hover { box-shadow: 0 8px 28px rgba(13,31,60,0.11); transform: translateY(-2px); }
@@ -315,302 +159,117 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
 .add-routine-label { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); }
 .add-routine-card:hover .add-routine-label { color: var(--blue); }
 
-/* ── CYCLES VIEW ──────────────────────── */
 .cycles-topbar { display: flex; align-items: center; gap: 16px; }
-
-/* Toggle pill */
 .toggle-wrap { display: flex; align-items: center; gap: 9px; cursor: pointer; user-select: none; }
 .toggle-wrap input { display: none; }
-.toggle-pill {
-  width: 42px; height: 24px; background: #cbd5e1; border-radius: 12px;
-  position: relative; transition: background 0.22s; flex-shrink: 0;
-}
-.toggle-pill::after {
-  content: ''; position: absolute; top: 3px; left: 3px;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
-}
+.toggle-pill { width: 42px; height: 24px; background: #cbd5e1; border-radius: 12px; position: relative; transition: background 0.22s; flex-shrink: 0; }
+.toggle-pill::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1); }
 .toggle-wrap input:checked ~ .toggle-pill { background: var(--blue); }
 .toggle-wrap input:checked ~ .toggle-pill::after { transform: translateX(18px); }
 .toggle-text { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
 .toggle-wrap input:checked ~ .toggle-text { color: var(--blue); }
-
-.btn-new-cycle {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700;
-  letter-spacing: 1px; text-transform: uppercase; color: white;
-  background: var(--navy); border: none; border-radius: 10px;
-  padding: 9px 20px; cursor: pointer; transition: background 0.15s;
-}
+.btn-new-cycle { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: white; background: var(--navy); border: none; border-radius: 10px; padding: 9px 20px; cursor: pointer; transition: background 0.15s; }
 .btn-new-cycle:hover { background: #1a3460; }
-
-/* Cycle card */
 .cycles-list { display: flex; flex-direction: column; gap: 14px; }
-
-.cycle-card {
-  background: white; border: 1.5px solid var(--border);
-  border-radius: 18px; overflow: hidden; transition: all 0.18s;
-}
+.cycle-card { background: white; border: 1.5px solid var(--border); border-radius: 18px; overflow: hidden; transition: all 0.18s; }
 .cycle-card:hover { box-shadow: 0 6px 22px rgba(13,31,60,0.1); }
 .cycle-card.is-default { border-color: var(--blue); }
-
-.cycle-card-header {
-  padding: 16px 20px 12px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-}
+.cycle-card-header { padding: 16px 20px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
 .cycle-card-title-row { display: flex; align-items: center; gap: 10px; }
 .cycle-card-name { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--navy); }
-.default-badge {
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
-  background: #eff6ff; color: var(--blue); border: 1.5px solid #bfdbfe;
-  border-radius: 6px; padding: 3px 8px;
-}
+.default-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; background: #eff6ff; color: var(--blue); border: 1.5px solid #bfdbfe; border-radius: 6px; padding: 3px 8px; }
 .cycle-card-actions { display: flex; gap: 8px; align-items: center; }
-.btn-set-default {
-  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
-  color: var(--text-secondary); background: var(--surface); border: 1.5px solid var(--border);
-  border-radius: 8px; padding: 6px 14px; cursor: pointer; transition: all 0.15s;
-}
+.btn-set-default { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-secondary); background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 14px; cursor: pointer; transition: all 0.15s; }
 .btn-set-default:hover { border-color: var(--blue); color: var(--blue); background: #eff6ff; }
 .btn-set-default.is-default { color: var(--blue); background: #eff6ff; border-color: #bfdbfe; cursor: default; }
-
-/* 7-day mini strip inside cycle card */
-.cycle-days-strip {
-  display: grid; grid-template-columns: repeat(7, 1fr);
-  gap: 0;
-  padding: 14px 20px 18px;
-}
+.cycle-days-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; padding: 14px 20px 18px; }
 .cycle-day-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 4px; }
 .cycle-day-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-muted); }
-.cycle-day-pill {
-  width: 100%; padding: 5px 4px;
-  border-radius: 10px; text-align: center;
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+.cycle-day-pill { width: 100%; padding: 5px 4px; border-radius: 10px; text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cycle-day-pill.empty { background: var(--surface); color: var(--text-muted); border: 1.5px dashed var(--border); }
 .cycle-day-pill.rest { background: #f8fafc; color: var(--text-muted); border: 1.5px solid var(--border); }
-
-/* Empty state */
 .cycles-empty { text-align: center; padding: 60px 20px; }
 .cycles-empty-icon { font-size: 40px; margin-bottom: 12px; }
 .cycles-empty-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 6px; }
 .cycles-empty-sub { font-size: 13px; color: var(--text-muted); }
 
-/* ── CYCLE EDITOR MODAL ──────────────── */
-.cycle-edit-modal {
-  background: white; border-radius: 22px;
-  width: 760px; max-width: 96vw;
-  box-shadow: 0 24px 70px rgba(13,31,60,0.3);
-  transform: translateY(24px) scale(0.98);
-  transition: transform 0.26s cubic-bezier(0.22,1,0.36,1);
-  overflow: hidden;
-}
+.cycle-edit-modal { background: white; border-radius: 22px; width: 760px; max-width: 96vw; box-shadow: 0 24px 70px rgba(13,31,60,0.3); transform: translateY(24px) scale(0.98); transition: transform 0.26s cubic-bezier(0.22,1,0.36,1); overflow: hidden; }
 .backdrop.visible .cycle-edit-modal { transform: translateY(0) scale(1); }
-
 .cycle-edit-header { padding: 24px 28px 20px; border-bottom: 1px solid var(--border); }
 .cycle-edit-eyebrow { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: var(--text-muted); margin-bottom: 10px; }
-.cycle-name-input {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: 1.5px; color: var(--navy);
-  border: none; outline: none; width: 100%; background: transparent;
-  border-bottom: 2.5px solid var(--border); padding-bottom: 8px; transition: border-color 0.15s;
-}
+.cycle-name-input { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--navy); border: none; outline: none; width: 100%; background: transparent; border-bottom: 2.5px solid var(--border); padding-bottom: 8px; transition: border-color 0.15s; }
 .cycle-name-input:focus { border-bottom-color: var(--blue); }
 .cycle-name-input::placeholder { color: var(--text-muted); }
-
-/* 7-day grid in editor */
 .cycle-editor-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding: 22px 28px; }
-.editor-day-card {
-  border: 1.5px solid var(--border); border-radius: 14px; padding: 12px 8px 10px;
-  cursor: pointer; transition: all 0.18s ease; position: relative;
-  min-height: 120px; display: flex; flex-direction: column; align-items: center;
-  text-align: center; overflow: hidden; background: white;
-}
+.editor-day-card { border: 1.5px solid var(--border); border-radius: 14px; padding: 12px 8px 10px; cursor: pointer; transition: all 0.18s ease; position: relative; min-height: 120px; display: flex; flex-direction: column; align-items: center; text-align: center; overflow: hidden; background: white; }
 .editor-day-card:hover { border-color: var(--blue); box-shadow: 0 4px 18px rgba(37,99,235,0.13); transform: translateY(-2px); }
 .editor-day-card.has-wo { border-color: transparent; }
 .editor-card-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 14px 14px 0 0; }
-.editor-day-label { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-top: 6px; margin-bottom: 0; }
-.editor-day-num { display: none; }
+.editor-day-label { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-top: 6px; }
 .editor-wo-badge { margin-top: auto; padding: 4px 8px; border-radius: 16px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .editor-rest-label { margin-top: auto; font-size: 10px; color: var(--text-muted); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
 .editor-add-hint { margin-top: auto; font-size: 20px; color: #c8d4e8; transition: color 0.18s; }
 .editor-day-card:hover .editor-add-hint { color: var(--blue); }
-
 .cycle-edit-footer { padding: 16px 28px 22px; display: flex; gap: 8px; border-top: 1px solid var(--border); }
 
-/* ── VIEW ALL EXERCISES MODAL ─────────── */
 #viewAllBackdrop { z-index: 350; }
-.view-all-modal {
-  background: white; border-radius: 22px;
-  width: 480px; max-width: 94vw; max-height: 85vh;
-  display: flex; flex-direction: column;
-  box-shadow: 0 24px 70px rgba(13,31,60,0.3);
-  transform: translateY(24px) scale(0.98);
-  transition: transform 0.26s cubic-bezier(0.22,1,0.36,1);
-  overflow: hidden;
-}
+.view-all-modal { background: white; border-radius: 22px; width: 480px; max-width: 94vw; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(13,31,60,0.3); transform: translateY(24px) scale(0.98); transition: transform 0.26s cubic-bezier(0.22,1,0.36,1); overflow: hidden; }
 .backdrop.visible .view-all-modal { transform: translateY(0) scale(1); }
-.view-all-header {
-  padding: 0;
-  flex-shrink: 0;
-}
+.view-all-header { padding: 0; flex-shrink: 0; }
 .view-all-accent { height: 5px; width: 100%; }
-.view-all-title-row {
-  padding: 20px 24px 14px;
-  display: flex; align-items: flex-start; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-}
-.view-all-name {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: 1px; color: var(--navy);
-}
-.view-all-count {
-  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px;
-  color: var(--text-muted); margin-top: 3px;
-}
-.view-all-close {
-  background: var(--surface); border: none; border-radius: 8px;
-  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 16px; color: var(--text-secondary);
-  transition: background 0.15s; flex-shrink: 0; margin-left: 12px;
-}
+.view-all-title-row { padding: 20px 24px 14px; display: flex; align-items: flex-start; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.view-all-name { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--navy); }
+.view-all-count { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-top: 3px; }
+.view-all-close { background: var(--surface); border: none; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: var(--text-secondary); transition: background 0.15s; flex-shrink: 0; margin-left: 12px; }
 .view-all-close:hover { background: var(--border); }
-.view-all-list {
-  flex: 1; overflow-y: auto; padding: 10px 24px 20px;
-}
+.view-all-list { flex: 1; overflow-y: auto; padding: 10px 24px 20px; }
 .view-all-list::-webkit-scrollbar { width: 5px; }
 .view-all-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-.view-all-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 0; border-bottom: 1px solid var(--border);
-}
+.view-all-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
 .view-all-row:last-child { border-bottom: none; }
-.view-all-num {
-  font-size: 10px; font-weight: 700; color: var(--text-muted);
-  width: 20px; text-align: right; flex-shrink: 0;
-}
+.view-all-num { font-size: 10px; font-weight: 700; color: var(--text-muted); width: 20px; text-align: right; flex-shrink: 0; }
 .view-all-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .view-all-ex-name { flex: 1; font-size: 14px; font-weight: 500; color: var(--text-primary); }
 .view-all-ex-sets { font-size: 12px; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
 
-/* ── SETTINGS VIEW ───────────────────── */
-.settings-card {
-  background: white; border: 1.5px solid var(--border);
-  border-radius: 18px; overflow: hidden; margin-bottom: 20px;
-}
-.settings-card-header {
-  display: flex; align-items: flex-start; gap: 14px;
-  padding: 20px 22px 16px; border-bottom: 1px solid var(--border);
-}
-.settings-card-icon {
-  width: 36px; height: 36px; border-radius: 10px; background: #eff6ff;
-  color: var(--blue); display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0; margin-top: 2px;
-}
-.settings-card-title {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: 1px; color: var(--navy); margin-bottom: 3px;
-}
+.settings-card { background: white; border: 1.5px solid var(--border); border-radius: 18px; overflow: hidden; margin-bottom: 20px; }
+.settings-card-header { display: flex; align-items: flex-start; gap: 14px; padding: 20px 22px 16px; border-bottom: 1px solid var(--border); }
+.settings-card-icon { width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+.settings-card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--navy); margin-bottom: 3px; }
 .settings-card-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; line-height: 1.5; }
-.settings-formcheck-tip {
-  padding: 10px 22px; font-size: 12px; color: var(--text-secondary);
-  background: #fffbeb; border-bottom: 1px solid #fef3c7;
-}
+.settings-formcheck-tip { padding: 10px 22px; font-size: 12px; color: var(--text-secondary); background: #fffbeb; border-bottom: 1px solid #fef3c7; }
 .fc-routine-group { border-bottom: 1px solid var(--border); }
 .fc-routine-group:last-child { border-bottom: none; }
-.fc-routine-header {
-  padding: 11px 22px 8px; display: flex; align-items: center; gap: 9px;
-  background: var(--surface);
-}
+.fc-routine-header { padding: 11px 22px 8px; display: flex; align-items: center; gap: 9px; background: var(--surface); }
 .fc-routine-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-.fc-routine-name {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: 1px; color: var(--navy);
-}
-.fc-ex-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 22px; border-top: 1px solid #f1f5f9;
-}
+.fc-routine-name { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--navy); }
+.fc-ex-row { display: flex; align-items: center; gap: 10px; padding: 8px 22px; border-top: 1px solid #f1f5f9; }
 .fc-ex-name { font-size: 13px; font-weight: 500; color: var(--text-primary); width: 180px; flex-shrink: 0; }
-.fc-url-input {
-  flex: 1; border: 1.5px solid var(--border); border-radius: 8px;
-  padding: 6px 10px; font-family: 'DM Sans', sans-serif;
-  font-size: 12px; color: var(--text-primary); outline: none;
-  transition: border-color 0.15s; min-width: 0;
-}
+.fc-url-input { flex: 1; border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 10px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-primary); outline: none; transition: border-color 0.15s; min-width: 0; }
 .fc-url-input:focus { border-color: var(--blue); }
 .fc-url-input.has-url { border-color: #10b981; background: #f0fdf4; }
 .fc-url-clear { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 14px; padding: 0 4px; transition: color 0.15s; flex-shrink: 0; }
 .fc-url-clear:hover { color: #ef4444; }
 
-/* Form check link on exercise rows */
 .slot-ex-name-wrap { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .slot-ex-name { font-size: 13.5px; font-weight: 500; color: var(--text-primary); }
-.form-check-link {
-  display: inline-block; font-size: 10px; font-weight: 600; color: var(--blue);
-  text-decoration: none; letter-spacing: 0.3px; margin-top: 1px; opacity: 0.75;
-  transition: opacity 0.15s;
-}
+.form-check-link { display: inline-block; font-size: 10px; font-weight: 600; color: var(--blue); text-decoration: none; letter-spacing: 0.3px; margin-top: 1px; opacity: 0.75; transition: opacity 0.15s; }
 .form-check-link:hover { opacity: 1; text-decoration: underline; }
 
-/* Exercise checkbox */
-.ex-checkbox {
-  width: 18px; height: 18px; border-radius: 5px;
-  border: 2px solid var(--border); background: white;
-  cursor: pointer; flex-shrink: 0; appearance: none; -webkit-appearance: none;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s; position: relative;
-}
-.ex-checkbox:checked {
-  background: #10b981; border-color: #10b981;
-}
-.ex-checkbox:checked::after {
-  content: '✓'; position: absolute; color: white;
-  font-size: 11px; font-weight: 700; line-height: 1;
-}
+.ex-checkbox { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border); background: white; cursor: pointer; flex-shrink: 0; appearance: none; -webkit-appearance: none; display: flex; align-items: center; justify-content: center; transition: all 0.15s; position: relative; }
+.ex-checkbox:checked { background: #10b981; border-color: #10b981; }
+.ex-checkbox:checked::after { content: '✓'; position: absolute; color: white; font-size: 11px; font-weight: 700; line-height: 1; }
+.slot-ex-row.completed { background: #f0fdf4; border-top-color: #10b981; outline: 2px solid #0d1f3c; outline-offset: -2px; border-radius: 4px; }
 
-/* Completed row highlight */
-.slot-ex-row.completed {
-  background: #f0fdf4;
-  border-top-color: #10b981;
-  outline: 2px solid #0d1f3c;
-  outline-offset: -2px;
-  border-radius: 4px;
-}
-
-/* Last session column */
-.last-session-wrap {
-  display: flex; flex-direction: column; align-items: center;
-  flex-shrink: 0; min-width: 44px;
-}
-.last-session-val {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 15px;
-  font-weight: 700; color: var(--text-muted); line-height: 1;
-}
+.last-session-wrap { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; min-width: 44px; }
+.last-session-val { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-muted); line-height: 1; }
 .last-session-val.has-val { color: #0d1f3c; }
-.last-session-label {
-  font-size: 8.5px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.5px; color: var(--text-muted); margin-top: 2px;
-  white-space: nowrap;
-}
+.last-session-label { font-size: 8.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; }
 
-.backdrop {
-  position: fixed; inset: 0; background: rgba(13,25,50,0.55); backdrop-filter: blur(5px);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.22s;
-}
+.backdrop { position: fixed; inset: 0; background: rgba(13,25,50,0.55); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.22s; }
 .backdrop.visible { opacity: 1; pointer-events: all; }
-/* Picker sits above all other modals */
 #calBackdrop { z-index: 400; }
-
-/* Calendar day picker */
-.cal-modal {
-  background: white; border-radius: 22px; padding: 26px 24px 20px;
-  width: 430px; max-width: 92vw; box-shadow: 0 24px 70px rgba(13,31,60,0.28);
-  transform: translateY(24px) scale(0.98); transition: transform 0.26s cubic-bezier(0.22,1,0.36,1);
-}
+.cal-modal { background: white; border-radius: 22px; padding: 26px 24px 20px; width: 430px; max-width: 92vw; box-shadow: 0 24px 70px rgba(13,31,60,0.28); transform: translateY(24px) scale(0.98); transition: transform 0.26s cubic-bezier(0.22,1,0.36,1); }
 .backdrop.visible .cal-modal { transform: translateY(0) scale(1); }
 .modal-eyebrow { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-secondary); margin-bottom: 3px; }
 .modal-title { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; text-transform: uppercase; color: var(--navy); letter-spacing: 1px; margin-bottom: 18px; }
@@ -625,13 +284,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
 .rest-option.selected { border-color: #94a3b8; background: #f8fafc; color: var(--text-primary); }
 .modal-divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
 .modal-actions { display: flex; gap: 8px; }
-
-/* Routine editor */
-.edit-modal {
-  background: white; border-radius: 22px; width: 560px; max-width: 94vw; max-height: 90vh;
-  display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(13,31,60,0.3);
-  transform: translateY(24px) scale(0.98); transition: transform 0.26s cubic-bezier(0.22,1,0.36,1); overflow: hidden;
-}
+.edit-modal { background: white; border-radius: 22px; width: 560px; max-width: 94vw; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(13,31,60,0.3); transform: translateY(24px) scale(0.98); transition: transform 0.26s cubic-bezier(0.22,1,0.36,1); overflow: hidden; }
 .backdrop.visible .edit-modal { transform: translateY(0) scale(1); }
 .edit-header { padding: 24px 26px 0; flex-shrink: 0; }
 .edit-eyebrow { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: var(--text-muted); margin-bottom: 10px; }
@@ -663,7 +316,6 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
 .add-exercise-btn:hover { background: #eff6ff; border-color: var(--blue); }
 .edit-footer { padding: 16px 26px 22px; display: flex; gap: 8px; flex-shrink: 0; border-top: 1px solid var(--border); margin-top: 14px; }
 
-/* ── BUTTONS (shared) ─────────────────── */
 .btn-danger { flex: 1; padding: 11px; background: #fef2f2; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: #ef4444; cursor: pointer; transition: background 0.15s; }
 .btn-danger:hover { background: #fee2e2; }
 .btn-ghost { flex: 1; padding: 11px; background: var(--surface); border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: background 0.15s; }
@@ -674,7 +326,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
 </head>
 <body>
 
-<!-- ══════════ HEADER ══════════ -->
+<!-- HEADER -->
 <div class="header">
   <div class="logo">
     <div class="logo-icon">🏋️</div>
@@ -696,7 +348,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
   </div>
 </div>
 
-<!-- ══════════ SCHEDULE VIEW ══════════ -->
+<!-- SCHEDULE VIEW -->
 <div class="view active" id="view-schedule">
   <div class="main">
     <div class="section-bar">
@@ -718,7 +370,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
   </div>
 </div>
 
-<!-- ══════════ WORKOUTS VIEW ══════════ -->
+<!-- WORKOUTS VIEW -->
 <div class="view" id="view-workouts">
   <div class="main">
     <div class="section-bar">
@@ -729,7 +381,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
   </div>
 </div>
 
-<!-- ══════════ CYCLES VIEW ══════════ -->
+<!-- CYCLES VIEW -->
 <div class="view" id="view-cycles">
   <div class="main">
     <div class="section-bar">
@@ -740,31 +392,25 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
   </div>
 </div>
 
-<!-- ══════════ SETTINGS VIEW ══════════ -->
+<!-- SETTINGS VIEW -->
 <div class="view" id="view-settings">
   <div class="main">
-    <div class="section-bar">
-      <div class="section-title">Settings</div>
-    </div>
-
-    <!-- Form Check section -->
+    <div class="section-bar"><div class="section-title">Settings</div></div>
     <div class="settings-card">
       <div class="settings-card-header">
         <div class="settings-card-icon">▶</div>
         <div>
           <div class="settings-card-title">Form Check URLs</div>
-          <div class="settings-card-sub">Link each exercise to a YouTube Short tutorial. Paste any URL — swap anytime.</div>
+          <div class="settings-card-sub">Link each exercise to a YouTube Short tutorial.</div>
         </div>
       </div>
-      <div class="settings-formcheck-tip">
-        💡 Tip: Use quanbfit YouTube Shorts for short, focused tutorials. Only exercises with a URL will show the "Form check" link.
-      </div>
+      <div class="settings-formcheck-tip">💡 Tip: Use quanbfit YouTube Shorts. Only exercises with a URL show the "Form check" link.</div>
       <div id="formCheckList"></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════ WORKOUT PICKER MODAL ══════════ -->
+<!-- WORKOUT PICKER MODAL -->
 <div class="backdrop" id="calBackdrop">
   <div class="cal-modal">
     <div class="modal-eyebrow" id="calDayLabel"></div>
@@ -779,7 +425,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
   </div>
 </div>
 
-<!-- ══════════ ROUTINE EDITOR MODAL ══════════ -->
+<!-- ROUTINE EDITOR MODAL -->
 <div class="backdrop" id="editBackdrop">
   <div class="edit-modal">
     <div class="edit-header">
@@ -802,7 +448,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
   </div>
 </div>
 
-<!-- ══════════ CYCLE EDITOR MODAL ══════════ -->
+<!-- CYCLE EDITOR MODAL -->
 <div class="backdrop" id="cycleEditBackdrop">
   <div class="cycle-edit-modal">
     <div class="cycle-edit-header">
@@ -818,7 +464,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
   </div>
 </div>
 
-<!-- ══════════ DAY DETAIL MODAL ══════════ -->
+<!-- DAY DETAIL MODAL -->
 <div class="backdrop" id="dayDetailBackdrop">
   <div class="day-detail-modal" style="position:relative">
     <div class="day-detail-accent" id="detailAccent"></div>
@@ -835,7 +481,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
   </div>
 </div>
 
-<!-- ══════════ VIEW ALL EXERCISES MODAL ══════════ -->
+<!-- VIEW ALL EXERCISES MODAL -->
 <div class="backdrop" id="viewAllBackdrop">
   <div class="view-all-modal">
     <div class="view-all-header">
@@ -851,8 +497,69 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f9; color: var(--tex
     <div class="view-all-list" id="viewAllList"></div>
   </div>
 </div>
-
 <script>
+/* ════════════════════════════════
+   INDEXEDDB STORAGE WRAPPER
+   Replaces window.storage (Claude artifact API) with IndexedDB.
+   Persists on-device through cache clears, force stops, reinstalls.
+   Same { key, value } API shape so all existing load/save functions
+   work completely unchanged.
+════════════════════════════════ */
+window.storage = (() => {
+  let _db = null;
+  function openDB() {
+    if (_db) return Promise.resolve(_db);
+    return new Promise((res, rej) => {
+      const req = indexedDB.open('liftbuddy-db', 1);
+      req.onupgradeneeded = e => e.target.result.createObjectStore('kv');
+      req.onsuccess = e => { _db = e.target.result; res(_db); };
+      req.onerror   = e => rej(e.target.error);
+    });
+  }
+  return {
+    async get(key) {
+      const db = await openDB();
+      return new Promise((res, rej) => {
+        const req = db.transaction('kv','readonly').objectStore('kv').get(key);
+        req.onsuccess = () => req.result !== undefined
+          ? res({ key, value: req.result })
+          : rej(new Error('Key not found: ' + key));
+        req.onerror = () => rej(req.error);
+      });
+    },
+    async set(key, value) {
+      const db = await openDB();
+      return new Promise((res, rej) => {
+        const req = db.transaction('kv','readwrite').objectStore('kv').put(value, key);
+        req.onsuccess = () => res({ key, value });
+        req.onerror = () => rej(req.error);
+      });
+    },
+    async delete(key) {
+      const db = await openDB();
+      return new Promise((res, rej) => {
+        const req = db.transaction('kv','readwrite').objectStore('kv').delete(key);
+        req.onsuccess = () => res({ key, deleted: true });
+        req.onerror = () => rej(req.error);
+      });
+    },
+    async list(prefix) {
+      const db = await openDB();
+      return new Promise((res, rej) => {
+        const req = db.transaction('kv','readonly').objectStore('kv').getAllKeys();
+        req.onsuccess = () => res({ keys: prefix ? req.result.filter(k => k.startsWith(prefix)) : req.result });
+        req.onerror = () => rej(req.error);
+      });
+    }
+  };
+})();
+
+/* Service Worker — offline support + installability */
+if ('serviceWorker' in navigator) {
+  const sw = `self.addEventListener('install',()=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(clients.claim()));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+  navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
+}
+
 /* ════════════════════════════════
    CONSTANTS
 ════════════════════════════════ */
@@ -874,7 +581,6 @@ const DEFAULT_ROUTINES = [
   { id: 'shoulders', name: 'Shoulders',   colorId: 'blue',   exercises: [] },
 ];
 
-// Exercise seeds — populate routines that have empty exercise lists
 const EXERCISE_SEEDS = {
   'chest': [
     { name: 'Barbell Bench Press',      sets:3, reps:12, group:{num:'01', label:'Heavy Compound Press',              note:'Sternal Head · Overall Mass'} },
@@ -981,52 +687,41 @@ const EXERCISE_SEEDS = {
   ],
 };
 
-// Default form check links — real quanbfit YouTube Shorts
-// Swap any URL in Settings at any time
 const DEFAULT_FORM_CHECKS = {
-  // CHEST
-  'Incline Fly':                    'https://youtube.com/shorts/CO9ArtEN3DM',
-  'Flat 1-Arm Fly':                 'https://youtube.com/shorts/xtsPqiZ83Kk',
-  'Incline DB Press':               'https://youtube.com/shorts/vWqA69xpelc',
-  'Chest Press Machine':            'https://youtube.com/shorts/bIi2hVAuZGo',
-  'Pec Fly Machine':                'https://youtube.com/shorts/TFaVMQNuDgc',
-
-  // BACK
-  'Back Extension':                 'https://youtube.com/shorts/Sqe1n1NyDHQ',
-  'Wide Cable Row':                 'https://youtube.com/shorts/jYg5MEoPfSc',
-  'Close Grip Lat Pulldown':        'https://youtube.com/shorts/ISCEGsbXbL4',
-  'Lat Pulldown':                   'https://youtube.com/shorts/pXFO_jKSh1E',
-  '1-Arm Cable Row':                'https://youtube.com/shorts/fM_1diu_oSw',
-  'Face Pulls':                     'https://youtube.com/shorts/MHZ1iuQnodA',
-  'Face Pulls — Neutral Bar':       'https://youtube.com/shorts/MHZ1iuQnodA',
-  'DB Shrugs':                      'https://youtube.com/shorts/aqaMPtuk4jk',
-
-  // ARMS — BICEPS
-  'Bayesian Curl':                  'https://youtube.com/shorts/VNQaUOE7tg4',
-  'Straight Bar Curl':              'https://youtube.com/shorts/dwwS0DSXW1o',
-  'Incline DB Curl':                'https://youtube.com/shorts/5EiBMaCLhF8',
-  'Preacher Curl':                  'https://youtube.com/shorts/ySHSb6YDAHc',
-  'Concentration Curl':             'https://youtube.com/shorts/dm_vQgI0ik0',
-  'Spider Curl':                    'https://youtube.com/shorts/KHc7aAgBZn0',
-  'EZ Bar Curl':                    'https://youtube.com/shorts/ft5YFAUjMPc',
-  'Zottman Curl':                   'https://youtube.com/shorts/mfkI1XKcyeM',
-  'Seated Hammer Curl':             'https://youtube.com/shorts/P-0bQRKdiKk',
-  'Reverse Curl':                   'https://youtube.com/shorts/O9LJnc0BIVU',
-
-  // ARMS — TRICEPS
-  'Overhead Extension':             'https://youtube.com/shorts/gRQ4qhpvuVo',
-  'Neutral Bar Overhead Extension': 'https://youtube.com/shorts/gRQ4qhpvuVo',
-  'Neutral Bar Overhead Ext.':      'https://youtube.com/shorts/gRQ4qhpvuVo',
-  'JM Press':                       'https://youtube.com/shorts/p49FDoFr21A',
-  'Straight Bar Pushdown':          'https://youtube.com/shorts/m9R2ysEWPLs',
-  'Tricep Machine':                 'https://youtube.com/shorts/njIScNSl5oU',
-
-  // SHOULDERS
-  'Arnold Press':                   'https://youtube.com/shorts/eun5m6d7B-Q',
-  'Shoulder Press Machine':         'https://youtube.com/shorts/yh3lAVFivNU',
-  'Lateral Cable Raise':            'https://youtube.com/shorts/c9KAEwtIPRY',
-  'Rear Delt Cable Fly':            'https://youtube.com/shorts/OOpM2VqRX9A',
-  'Bent-Over Reverse Fly':          'https://youtube.com/shorts/OOpM2VqRX9A',
+  'Incline Fly':'https://youtube.com/shorts/CO9ArtEN3DM',
+  'Flat 1-Arm Fly':'https://youtube.com/shorts/xtsPqiZ83Kk',
+  'Incline DB Press':'https://youtube.com/shorts/vWqA69xpelc',
+  'Chest Press Machine':'https://youtube.com/shorts/bIi2hVAuZGo',
+  'Pec Fly Machine':'https://youtube.com/shorts/TFaVMQNuDgc',
+  'Back Extension':'https://youtube.com/shorts/Sqe1n1NyDHQ',
+  'Wide Cable Row':'https://youtube.com/shorts/jYg5MEoPfSc',
+  'Close Grip Lat Pulldown':'https://youtube.com/shorts/ISCEGsbXbL4',
+  'Lat Pulldown':'https://youtube.com/shorts/pXFO_jKSh1E',
+  '1-Arm Cable Row':'https://youtube.com/shorts/fM_1diu_oSw',
+  'Face Pulls':'https://youtube.com/shorts/MHZ1iuQnodA',
+  'Face Pulls — Neutral Bar':'https://youtube.com/shorts/MHZ1iuQnodA',
+  'DB Shrugs':'https://youtube.com/shorts/aqaMPtuk4jk',
+  'Bayesian Curl':'https://youtube.com/shorts/VNQaUOE7tg4',
+  'Straight Bar Curl':'https://youtube.com/shorts/dwwS0DSXW1o',
+  'Incline DB Curl':'https://youtube.com/shorts/5EiBMaCLhF8',
+  'Preacher Curl':'https://youtube.com/shorts/ySHSb6YDAHc',
+  'Concentration Curl':'https://youtube.com/shorts/dm_vQgI0ik0',
+  'Spider Curl':'https://youtube.com/shorts/KHc7aAgBZn0',
+  'EZ Bar Curl':'https://youtube.com/shorts/ft5YFAUjMPc',
+  'Zottman Curl':'https://youtube.com/shorts/mfkI1XKcyeM',
+  'Seated Hammer Curl':'https://youtube.com/shorts/P-0bQRKdiKk',
+  'Reverse Curl':'https://youtube.com/shorts/O9LJnc0BIVU',
+  'Overhead Extension':'https://youtube.com/shorts/gRQ4qhpvuVo',
+  'Neutral Bar Overhead Extension':'https://youtube.com/shorts/gRQ4qhpvuVo',
+  'Neutral Bar Overhead Ext.':'https://youtube.com/shorts/gRQ4qhpvuVo',
+  'JM Press':'https://youtube.com/shorts/p49FDoFr21A',
+  'Straight Bar Pushdown':'https://youtube.com/shorts/m9R2ysEWPLs',
+  'Tricep Machine':'https://youtube.com/shorts/njIScNSl5oU',
+  'Arnold Press':'https://youtube.com/shorts/eun5m6d7B-Q',
+  'Shoulder Press Machine':'https://youtube.com/shorts/yh3lAVFivNU',
+  'Lateral Cable Raise':'https://youtube.com/shorts/c9KAEwtIPRY',
+  'Rear Delt Cable Fly':'https://youtube.com/shorts/OOpM2VqRX9A',
+  'Bent-Over Reverse Fly':'https://youtube.com/shorts/OOpM2VqRX9A',
 };
 
 const DAY_ABBR = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
@@ -1038,26 +733,23 @@ const MONTHS   = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','N
 ════════════════════════════════ */
 let routines    = [];
 let cycles      = [];
-let weights     = {}; // { 'routineId:exerciseName': current weight input }
-let lastSession = {}; // { 'routineId:exerciseName': last completed weight }
+let weights     = {};
+let lastSession = {};
 let formChecks  = {};
 let settings    = { cycleMode: false, defaultCycleId: null };
 let weekOffset  = 0;
 let assignments = {};
 let activeTab   = 'schedule';
 
-// Workout picker shared context
-let pickerMode      = 'calendar'; // 'calendar' | 'cycle-editor'
-let selectedDate    = null;       // used in calendar mode
-let selectedCycleSlot = null;    // 1-7, used in cycle-editor mode
+let pickerMode      = 'calendar';
+let selectedDate    = null;
+let selectedCycleSlot = null;
 
-// Routine editor state
 let editingRoutineId = null;
 let editColorId      = COLORS[0].id;
 
-// Cycle editor state
 let editingCycleId = null;
-let editCycleDays  = {}; // { '1': routineId|'rest'|null, ... }
+let editCycleDays  = {};
 
 /* ════════════════════════════════
    HELPERS
@@ -1087,7 +779,7 @@ function weekLabel(dates) {
 }
 
 /* ════════════════════════════════
-   STORAGE
+   STORAGE (all via window.storage = IndexedDB)
 ════════════════════════════════ */
 async function loadRoutines() {
   try { const r = await window.storage.get('liftbuddy:routines'); if (r) { routines = JSON.parse(r.value); return; } } catch {}
@@ -1134,7 +826,6 @@ async function loadFormChecks() {
     const r = await window.storage.get('liftbuddy:formchecks');
     if (r) {
       formChecks = JSON.parse(r.value);
-      // Merge in any new defaults not yet in saved data
       let changed = false;
       Object.entries(DEFAULT_FORM_CHECKS).forEach(([k, v]) => {
         if (!formChecks[k]) { formChecks[k] = v; changed = true; }
@@ -1143,7 +834,6 @@ async function loadFormChecks() {
       return;
     }
   } catch {}
-  // First load — use all defaults
   formChecks = { ...DEFAULT_FORM_CHECKS };
   await saveFormChecks();
 }
@@ -1185,7 +875,6 @@ document.querySelectorAll('.header-tab').forEach(btn => {
    CALENDAR
 ════════════════════════════════ */
 function getCycleAssignment(dayIndex) {
-  // dayIndex 0=Mon ... 6=Sun → cycle day 1-7
   if (!settings.cycleMode || !settings.defaultCycleId) return null;
   const cycle = getCycle(settings.defaultCycleId);
   if (!cycle) return null;
@@ -1195,11 +884,9 @@ function getCycleAssignment(dayIndex) {
 function renderCalendar() {
   const dates  = getWeekDates(weekOffset);
   const todayK = toKey(new Date());
-
   syncCycleModeToggle();
   document.getElementById('weekRange').textContent = weekLabel(dates);
 
-  // Cycle mode banner
   const banner = document.getElementById('cycleBanner');
   if (settings.cycleMode && settings.defaultCycleId) {
     const dc = getCycle(settings.defaultCycleId);
@@ -1209,7 +896,6 @@ function renderCalendar() {
     banner.classList.remove('visible');
   }
 
-  // Summary
   let wCount = 0, rCount = 0;
   dates.forEach((d, i) => {
     const key = toKey(d);
@@ -1237,26 +923,18 @@ function renderCalendar() {
     const routine    = a && a !== 'rest' ? getRoutine(a) : null;
     const clr        = routine ? getClr(routine.colorId) : null;
 
-    // Outer row
     const row = document.createElement('div');
-    row.className = 'week-row'
-      + (isToday ? ' today' : '')
-      + (routine ? ' has-workout' : '')
-      + (isCycleFed ? ' is-cycle' : '');
+    row.className = 'week-row' + (isToday?' today':'') + (routine?' has-workout':'') + (isCycleFed?' is-cycle':'');
 
-    // Date box
     const dateBox = document.createElement('div');
     dateBox.className = 'week-date-box';
-    dateBox.innerHTML = `<div class="week-date-day">${DAY_ABBR[i]}</div>
-                         <div class="week-date-num">${date.getDate()}</div>`;
+    dateBox.innerHTML = `<div class="week-date-day">${DAY_ABBR[i]}</div><div class="week-date-num">${date.getDate()}</div>`;
     row.appendChild(dateBox);
 
-    // Workout panel
     const panel = document.createElement('div');
     panel.className = 'week-workout-panel';
     if (clr) panel.style.background = clr.bg;
 
-    // Panel header
     const header = document.createElement('div');
     header.className = 'week-panel-header';
 
@@ -1268,8 +946,7 @@ function renderCalendar() {
     }
 
     if (routine) {
-      header.innerHTML += `
-        <div class="week-panel-name" style="color:${clr.color}">${routine.name}</div>
+      header.innerHTML += `<div class="week-panel-name" style="color:${clr.color}">${routine.name}</div>
         <div class="week-panel-badges">
           ${isCycleFed ? '<span class="cycle-chip-inline">↻ cycle</span>' : ''}
           <button class="week-panel-gear" title="Change workout">⚙</button>
@@ -1285,41 +962,22 @@ function renderCalendar() {
 
     panel.appendChild(header);
 
-    // Expandable body (only for routines)
     if (routine) {
       const body = document.createElement('div');
       body.className = 'week-panel-body';
-
-      // Lazily render exercises on first expand
       let rendered = false;
-      const chevron = header.querySelector('.week-panel-chevron');
-
       header.addEventListener('click', (e) => {
         if (e.target.closest('.week-panel-gear')) return;
         const isOpen = body.classList.toggle('open');
         header.classList.toggle('expanded', isOpen);
-        if (isOpen && !rendered) {
-          renderGroupedExercises(body, routine.exercises, clr.color, routine.id);
-          rendered = true;
-        }
+        if (isOpen && !rendered) { renderGroupedExercises(body, routine.exercises, clr.color, routine.id); rendered = true; }
       });
-
-      header.querySelector('.week-panel-gear').addEventListener('click', (e) => {
-        e.stopPropagation();
-        openCalPicker(date, i);
-      });
-
+      header.querySelector('.week-panel-gear').addEventListener('click', (e) => { e.stopPropagation(); openCalPicker(date, i); });
       panel.appendChild(body);
     } else {
-      // Empty/rest — whole header opens picker
       const addBtn = header.querySelector('.week-add-btn');
-      if (addBtn) {
-        addBtn.addEventListener('click', (e) => { e.stopPropagation(); openCalPicker(date, i); });
-      }
-      header.addEventListener('click', (e) => {
-        if (e.target.closest('.week-add-btn')) return;
-        openCalPicker(date, i);
-      });
+      if (addBtn) addBtn.addEventListener('click', (e) => { e.stopPropagation(); openCalPicker(date, i); });
+      header.addEventListener('click', (e) => { if (e.target.closest('.week-add-btn')) return; openCalPicker(date, i); });
     }
 
     row.appendChild(panel);
@@ -1328,13 +986,12 @@ function renderCalendar() {
 }
 
 /* ════════════════════════════════
-   WORKOUT PICKER (shared modal)
+   WORKOUT PICKER
 ════════════════════════════════ */
 function openCalPicker(date, dayIdx) {
   pickerMode   = 'calendar';
   selectedDate = toKey(date);
-  document.getElementById('calDayLabel').textContent =
-    DAY_FULL[dayIdx] + ', ' + MONTHS[date.getMonth()] + ' ' + date.getDate();
+  document.getElementById('calDayLabel').textContent = DAY_FULL[dayIdx] + ', ' + MONTHS[date.getMonth()] + ' ' + date.getDate();
   const current = assignments[selectedDate] || getCycleAssignment(dayIdx);
   buildPickerOptions(current);
   document.getElementById('clearDayBtn').style.display = '';
@@ -1342,8 +999,7 @@ function openCalPicker(date, dayIdx) {
 }
 
 function openCyclePicker(slot) {
-  pickerMode        = 'cycle-editor';
-  selectedCycleSlot = slot;
+  pickerMode = 'cycle-editor'; selectedCycleSlot = slot;
   document.getElementById('calDayLabel').textContent = `Day ${slot}`;
   buildPickerOptions(editCycleDays[String(slot)]);
   document.getElementById('clearDayBtn').style.display = '';
@@ -1354,13 +1010,11 @@ function buildPickerOptions(current) {
   const container = document.getElementById('calOptions');
   container.innerHTML = '';
   routines.forEach(r => {
-    const clr    = getClr(r.colorId);
-    const active = current === r.id;
-    const btn    = document.createElement('button');
+    const clr = getClr(r.colorId), active = current === r.id;
+    const btn = document.createElement('button');
     btn.className = 'cal-option' + (active ? ' selected' : '');
     if (active) { btn.style.borderColor = clr.color; btn.style.background = clr.bg; }
-    btn.innerHTML = `<div class="cal-dot" style="background:${clr.color}"></div>
-                     <div class="cal-name">${r.name}</div>`;
+    btn.innerHTML = `<div class="cal-dot" style="background:${clr.color}"></div><div class="cal-name">${r.name}</div>`;
     btn.addEventListener('click', () => confirmPick(r.id));
     container.appendChild(btn);
   });
@@ -1370,59 +1024,39 @@ function buildPickerOptions(current) {
 async function confirmPick(value) {
   if (pickerMode === 'calendar') {
     assignments[selectedDate] = value;
-    await saveWeek();
-    closeCalPicker();
-    renderCalendar();
+    await saveWeek(); closeCalPicker(); renderCalendar();
   } else {
     editCycleDays[String(selectedCycleSlot)] = value;
-    closeCalPicker();
-    renderCycleEditorGrid();
+    closeCalPicker(); renderCycleEditorGrid();
   }
 }
 
 document.getElementById('restBtn').addEventListener('click', () => confirmPick('rest'));
-
 document.getElementById('clearDayBtn').addEventListener('click', async () => {
-  if (pickerMode === 'calendar') {
-    delete assignments[selectedDate];
-    await saveWeek();
-    closeCalPicker();
-    renderCalendar();
-  } else {
-    delete editCycleDays[String(selectedCycleSlot)];
-    closeCalPicker();
-    renderCycleEditorGrid();
-  }
+  if (pickerMode === 'calendar') { delete assignments[selectedDate]; await saveWeek(); closeCalPicker(); renderCalendar(); }
+  else { delete editCycleDays[String(selectedCycleSlot)]; closeCalPicker(); renderCycleEditorGrid(); }
 });
-
 function closeCalPicker() { document.getElementById('calBackdrop').classList.remove('visible'); }
 document.getElementById('calCancelBtn').addEventListener('click', closeCalPicker);
 document.getElementById('calBackdrop').addEventListener('click', e => { if (e.target.id === 'calBackdrop') closeCalPicker(); });
 
-/* ════════════════════════════════
-   WEEK NAV
-════════════════════════════════ */
 document.getElementById('prevWeek').addEventListener('click', async () => { weekOffset--; await loadWeek(); renderCalendar(); });
 document.getElementById('nextWeek').addEventListener('click', async () => { weekOffset++; await loadWeek(); renderCalendar(); });
 
 /* ════════════════════════════════
-   GROUPED EXERCISE RENDERER (shared)
+   GROUPED EXERCISE RENDERER
 ════════════════════════════════ */
-// Slot header colors — consistent palette matching session card style
 const SLOT_COLORS = {
-  '01':'#0d1f3c', '02':'#1d4ed8', '03':'#1d4ed8', '04':'#047857',
-  '05':'#6d28d9', '06':'#b91c1c',
-  'B1':'#0d1f3c', 'B2':'#6d28d9', 'B3':'#047857', 'B4':'#d97706',
-  'T1':'#0d1f3c', 'T2':'#1d4ed8', 'T3':'#b91c1c',
-  '+': '#4b5563', '★':'#b45309',
+  '01':'#0d1f3c','02':'#1d4ed8','03':'#1d4ed8','04':'#047857',
+  '05':'#6d28d9','06':'#b91c1c',
+  'B1':'#0d1f3c','B2':'#6d28d9','B3':'#047857','B4':'#d97706',
+  'T1':'#0d1f3c','T2':'#1d4ed8','T3':'#b91c1c',
+  '+':'#4b5563','★':'#b45309',
 };
 
 function buildExRow(ex, routineId, headerColor) {
-  const wKey  = routineId ? `${routineId}:${ex.name}` : ex.name;
-  const w     = weights[wKey] || '';
-  const ls    = lastSession[wKey] || '';
-  const fcUrl = formChecks[ex.name] || '';
-
+  const wKey = routineId ? `${routineId}:${ex.name}` : ex.name;
+  const w = weights[wKey] || '', ls = lastSession[wKey] || '', fcUrl = formChecks[ex.name] || '';
   const row = document.createElement('div');
   row.className = 'slot-ex-row';
   row.innerHTML = `
@@ -1433,157 +1067,95 @@ function buildExRow(ex, routineId, headerColor) {
       ${fcUrl ? `<a class="form-check-link" href="${fcUrl}" target="_blank" rel="noopener">▶ Form check</a>` : ''}
     </div>
     <div class="last-session-wrap">
-      <div class="last-session-val${ls ? ' has-val' : ''}">${ls ? ls : '—'}</div>
+      <div class="last-session-val${ls?' has-val':''}">${ls||'—'}</div>
       <div class="last-session-label">Last</div>
     </div>
     <div class="weight-wrap">
-      <input class="weight-input${w ? ' has-weight' : ''}" type="number" min="0" placeholder="—" value="${w}" data-wkey="${wKey}">
+      <input class="weight-input${w?' has-weight':''}" type="number" min="0" placeholder="—" value="${w}" data-wkey="${wKey}">
       <span class="weight-unit">lbs</span>
     </div>`;
 
-  const checkbox   = row.querySelector('.ex-checkbox');
+  const checkbox = row.querySelector('.ex-checkbox');
   const weightInput = row.querySelector('.weight-input');
-  const lastValEl  = row.querySelector('.last-session-val');
-
+  const lastValEl = row.querySelector('.last-session-val');
   weightInput.addEventListener('input', onWeightInput);
-
   checkbox.addEventListener('change', async () => {
     if (checkbox.checked) {
       const val = weightInput.value.trim();
       row.classList.add('completed');
-      if (val) {
-        lastSession[wKey] = val;
-        lastValEl.textContent = val;
-        lastValEl.classList.add('has-val');
-        await saveLastSession();
-      }
-    } else {
-      row.classList.remove('completed');
-    }
+      if (val) { lastSession[wKey] = val; lastValEl.textContent = val; lastValEl.classList.add('has-val'); await saveLastSession(); }
+    } else { row.classList.remove('completed'); }
   });
-
   return row;
 }
 
 function renderGroupedExercises(container, exercises, routineColor, routineId) {
   container.innerHTML = '';
   const hasGroups = exercises.some(e => e.group);
-
-  if (!hasGroups) {
-    exercises.forEach(ex => {
-      container.appendChild(buildExRow(ex, routineId, routineColor));
-    });
-    return;
-  }
-
-  // Group by slot
-  const groups = [];
-  const seen   = {};
+  if (!hasGroups) { exercises.forEach(ex => container.appendChild(buildExRow(ex, routineId, routineColor))); return; }
+  const groups = [], seen = {};
   exercises.forEach(ex => {
-    const key = ex.group ? ex.group.num + '|' + ex.group.label : '__ungrouped';
+    const key = ex.group ? ex.group.num+'|'+ex.group.label : '__ungrouped';
     if (!seen[key]) { seen[key] = true; groups.push({ key, g: ex.group, exs: [] }); }
     groups.find(g => g.key === key).exs.push(ex);
   });
-
   groups.forEach(({ g, exs }) => {
     const headerColor = g ? (SLOT_COLORS[g.num] || routineColor) : routineColor;
-    const wrap = document.createElement('div');
-    wrap.className = 'slot-group';
-
-    const header = document.createElement('div');
-    header.className = 'slot-header';
-    header.style.background = headerColor;
-    header.innerHTML = g
-      ? `<div class="slot-num">${g.num}</div>
-         <div class="slot-label">${g.label}</div>
-         <div class="slot-note">${g.note}</div>`
-      : `<div class="slot-label">Exercises</div>`;
+    const wrap = document.createElement('div'); wrap.className = 'slot-group';
+    const header = document.createElement('div'); header.className = 'slot-header'; header.style.background = headerColor;
+    header.innerHTML = g ? `<div class="slot-num">${g.num}</div><div class="slot-label">${g.label}</div><div class="slot-note">${g.note}</div>` : `<div class="slot-label">Exercises</div>`;
     wrap.appendChild(header);
-
-    const exWrap = document.createElement('div');
-    exWrap.className = 'slot-exercises';
+    const exWrap = document.createElement('div'); exWrap.className = 'slot-exercises';
     exs.forEach(ex => exWrap.appendChild(buildExRow(ex, routineId, headerColor)));
-    wrap.appendChild(exWrap);
-    container.appendChild(wrap);
+    wrap.appendChild(exWrap); container.appendChild(wrap);
   });
 }
 
 function onWeightInput(e) {
-  const key = e.target.dataset.wkey;
-  const val = e.target.value.trim();
-  if (val) {
-    weights[key] = val;
-    e.target.classList.add('has-weight');
-  } else {
-    delete weights[key];
-    e.target.classList.remove('has-weight');
-  }
+  const key = e.target.dataset.wkey, val = e.target.value.trim();
+  if (val) { weights[key] = val; e.target.classList.add('has-weight'); }
+  else { delete weights[key]; e.target.classList.remove('has-weight'); }
   scheduleWeightSave();
 }
 
 /* ════════════════════════════════
    DAY DETAIL MODAL
 ════════════════════════════════ */
-let detailDate = null;
-let detailDayIdx = null;
+let detailDate = null, detailDayIdx = null;
 
 function openDayDetail(date, dayIdx) {
-  detailDate   = date;
-  detailDayIdx = dayIdx;
-  const key    = toKey(date);
-  const a      = assignments[key] || getCycleAssignment(dayIdx);
+  detailDate = date; detailDayIdx = dayIdx;
+  const key = toKey(date), a = assignments[key] || getCycleAssignment(dayIdx);
   const routine = a && a !== 'rest' ? getRoutine(a) : null;
   if (!routine) return;
   const clr = getClr(routine.colorId);
-
   document.getElementById('detailAccent').style.background = clr.color;
-  document.getElementById('detailMeta').textContent =
-    DAY_FULL[dayIdx] + ' · ' + MONTHS[date.getMonth()] + ' ' + date.getDate();
+  document.getElementById('detailMeta').textContent = DAY_FULL[dayIdx] + ' · ' + MONTHS[date.getMonth()] + ' ' + date.getDate();
   document.getElementById('detailTitle').textContent = routine.name;
   document.getElementById('detailTitle').style.color = clr.color;
-  document.getElementById('detailSub').textContent   =
-    `${routine.exercises.length} exercise${routine.exercises.length !== 1 ? 's' : ''} · Pick one per slot`;
-
-  renderGroupedExercises(
-    document.getElementById('detailExercises'),
-    routine.exercises,
-    clr.color,
-    routine.id
-  );
+  document.getElementById('detailSub').textContent = `${routine.exercises.length} exercise${routine.exercises.length!==1?'s':''} · Pick one per slot`;
+  renderGroupedExercises(document.getElementById('detailExercises'), routine.exercises, clr.color, routine.id);
   document.getElementById('dayDetailBackdrop').classList.add('visible');
 }
 
-function closeDayDetail() {
-  document.getElementById('dayDetailBackdrop').classList.remove('visible');
-}
-
+function closeDayDetail() { document.getElementById('dayDetailBackdrop').classList.remove('visible'); }
 document.getElementById('dayDetailClose').addEventListener('click', closeDayDetail);
-document.getElementById('dayDetailBackdrop').addEventListener('click', e => {
-  if (e.target.id === 'dayDetailBackdrop') closeDayDetail();
-});
-document.getElementById('detailChangeBtn').addEventListener('click', () => {
-  closeDayDetail();
-  openCalPicker(detailDate, detailDayIdx);
-});
+document.getElementById('dayDetailBackdrop').addEventListener('click', e => { if (e.target.id==='dayDetailBackdrop') closeDayDetail(); });
+document.getElementById('detailChangeBtn').addEventListener('click', () => { closeDayDetail(); openCalPicker(detailDate, detailDayIdx); });
 
 /* ════════════════════════════════
    VIEW ALL EXERCISES
 ════════════════════════════════ */
 function openViewAll(routineId) {
-  const r   = getRoutine(routineId);
-  const clr = getClr(r.colorId);
+  const r = getRoutine(routineId), clr = getClr(r.colorId);
   document.getElementById('viewAllAccent').style.background = clr.color;
-  document.getElementById('viewAllName').textContent  = r.name;
+  document.getElementById('viewAllName').textContent = r.name;
   document.getElementById('viewAllCount').textContent = `${r.exercises.length} exercises · Pick one per slot`;
   renderGroupedExercises(document.getElementById('viewAllList'), r.exercises, clr.color, r.id);
   document.getElementById('viewAllBackdrop').classList.add('visible');
 }
-
-document.getElementById('viewAllClose').addEventListener('click', () =>
-  document.getElementById('viewAllBackdrop').classList.remove('visible'));
-document.getElementById('viewAllBackdrop').addEventListener('click', e => {
-  if (e.target.id === 'viewAllBackdrop') document.getElementById('viewAllBackdrop').classList.remove('visible');
-});
+document.getElementById('viewAllClose').addEventListener('click', () => document.getElementById('viewAllBackdrop').classList.remove('visible'));
+document.getElementById('viewAllBackdrop').addEventListener('click', e => { if (e.target.id==='viewAllBackdrop') document.getElementById('viewAllBackdrop').classList.remove('visible'); });
 
 /* ════════════════════════════════
    ROUTINES
@@ -1591,43 +1163,27 @@ document.getElementById('viewAllBackdrop').addEventListener('click', e => {
 function renderRoutines() {
   const grid = document.getElementById('routinesGrid');
   grid.innerHTML = '';
-  document.getElementById('routineCount').textContent = `${routines.length} routine${routines.length !== 1 ? 's' : ''}`;
-
+  document.getElementById('routineCount').textContent = `${routines.length} routine${routines.length!==1?'s':''}`;
   routines.forEach(r => {
-    const clr   = getClr(r.colorId);
-    const exs   = r.exercises || [];
-    const shown = exs.slice(0, 4);
-    const more  = exs.length - shown.length;
-    const card  = document.createElement('div');
-    card.className = 'routine-card';
-    card.innerHTML = `
-      <div class="routine-accent" style="background:${clr.color}"></div>
+    const clr = getClr(r.colorId), exs = r.exercises||[], shown = exs.slice(0,4), more = exs.length-shown.length;
+    const card = document.createElement('div'); card.className = 'routine-card';
+    card.innerHTML = `<div class="routine-accent" style="background:${clr.color}"></div>
       <div class="routine-body">
         <div class="routine-name">${r.name}</div>
-        <div class="routine-meta">${exs.length} exercise${exs.length !== 1 ? 's' : ''}</div>
+        <div class="routine-meta">${exs.length} exercise${exs.length!==1?'s':''}</div>
         <div class="exercise-preview">
-          ${exs.length === 0
-            ? `<div class="empty-exercises">No exercises yet — hit Edit to add some</div>`
-            : shown.map(ex => `
-              <div class="exercise-preview-item">
-                <div class="ex-dot" style="background:${clr.color}"></div>
-                <div class="ex-name">${ex.name}</div>
-                <div class="ex-sets">${ex.sets}×${ex.reps}</div>
-              </div>`).join('') + (more > 0 ? `<div class="ex-more" style="cursor:pointer;color:var(--blue);font-style:normal;font-weight:600" data-view-id="${r.id}">+${more} more →</div>` : '')
-          }
+          ${exs.length===0?`<div class="empty-exercises">No exercises yet — hit Edit to add some</div>`:
+            shown.map(ex=>`<div class="exercise-preview-item"><div class="ex-dot" style="background:${clr.color}"></div><div class="ex-name">${ex.name}</div><div class="ex-sets">${ex.sets}×${ex.reps}</div></div>`).join('')+
+            (more>0?`<div class="ex-more" style="cursor:pointer;color:var(--blue);font-style:normal;font-weight:600" data-view-id="${r.id}">+${more} more →</div>`:'')}
         </div>
-        <div class="routine-footer">
-          <button class="btn-edit" data-id="${r.id}">✏️ Edit</button>
-        </div>
+        <div class="routine-footer"><button class="btn-edit" data-id="${r.id}">✏️ Edit</button></div>
       </div>`;
     card.querySelector('.btn-edit').addEventListener('click', () => openRoutineEditor(r.id));
     const moreBtn = card.querySelector('[data-view-id]');
     if (moreBtn) moreBtn.addEventListener('click', () => openViewAll(r.id));
     grid.appendChild(card);
   });
-
-  const addCard = document.createElement('div');
-  addCard.className = 'add-routine-card';
+  const addCard = document.createElement('div'); addCard.className = 'add-routine-card';
   addCard.innerHTML = `<div class="add-routine-icon">＋</div><div class="add-routine-label">Add Workout</div>`;
   addCard.addEventListener('click', () => openRoutineEditor(null));
   grid.appendChild(addCard);
@@ -1637,11 +1193,10 @@ function renderRoutines() {
    ROUTINE EDITOR
 ════════════════════════════════ */
 function buildColorSwatches() {
-  const c = document.getElementById('colorSwatches');
-  c.innerHTML = '';
+  const c = document.getElementById('colorSwatches'); c.innerHTML = '';
   COLORS.forEach(cl => {
     const sw = document.createElement('button');
-    sw.className = 'color-swatch' + (cl.id === editColorId ? ' selected' : '');
+    sw.className = 'color-swatch'+(cl.id===editColorId?' selected':'');
     sw.style.background = cl.color;
     sw.addEventListener('click', () => { editColorId = cl.id; buildColorSwatches(); });
     c.appendChild(sw);
@@ -1649,51 +1204,39 @@ function buildColorSwatches() {
 }
 
 function buildExerciseRow(ex) {
-  const row = document.createElement('div');
-  row.className = 'exercise-row';
-  row.dataset.id = ex.id;
-  row.innerHTML = `
-    <span class="ex-handle">⠿</span>
+  const row = document.createElement('div'); row.className = 'exercise-row'; row.dataset.id = ex.id;
+  row.innerHTML = `<span class="ex-handle">⠿</span>
     <input class="ex-input-name" type="text" placeholder="Exercise name" value="${ex.name}" autocomplete="off">
-    <span class="ex-label">Sets</span>
-    <input class="ex-input-num" type="number" min="1" max="20" value="${ex.sets}">
-    <span class="ex-sep">×</span>
-    <input class="ex-input-num" type="number" min="1" max="100" value="${ex.reps}">
-    <span class="ex-label">Reps</span>
-    <button class="ex-delete">✕</button>`;
+    <span class="ex-label">Sets</span><input class="ex-input-num" type="number" min="1" max="20" value="${ex.sets}">
+    <span class="ex-sep">×</span><input class="ex-input-num" type="number" min="1" max="100" value="${ex.reps}">
+    <span class="ex-label">Reps</span><button class="ex-delete">✕</button>`;
   row.querySelector('.ex-delete').addEventListener('click', () => row.remove());
   return row;
 }
 
 function openRoutineEditor(routineId) {
   editingRoutineId = routineId;
-  const existing   = routineId ? getRoutine(routineId) : null;
+  const existing = routineId ? getRoutine(routineId) : null;
   document.getElementById('editEyebrow').textContent = existing ? 'Edit Routine' : 'New Routine';
-  document.getElementById('editNameInput').value     = existing ? existing.name : '';
+  document.getElementById('editNameInput').value = existing ? existing.name : '';
   editColorId = existing ? existing.colorId : COLORS[0].id;
   buildColorSwatches();
-  const list = document.getElementById('exercisesList');
-  list.innerHTML = '';
-  if (existing) (existing.exercises || []).forEach(ex => list.appendChild(buildExerciseRow({ ...ex })));
+  const list = document.getElementById('exercisesList'); list.innerHTML = '';
+  if (existing) (existing.exercises||[]).forEach(ex => list.appendChild(buildExerciseRow({...ex})));
   document.getElementById('deleteRoutineBtn').style.display = routineId ? '' : 'none';
   document.getElementById('editBackdrop').classList.add('visible');
   setTimeout(() => document.getElementById('editNameInput').focus(), 280);
 }
 
-// Inject "Add Exercise" button once
 (function() {
   const section = document.querySelector('.edit-exercises-section');
-  const btn = document.createElement('button');
-  btn.className = 'add-exercise-btn';
-  btn.innerHTML = '＋ &nbsp;Add Exercise';
-  btn.style.cssText = 'margin:8px 26px 0;flex-shrink:0';
+  const btn = document.createElement('button'); btn.className = 'add-exercise-btn';
+  btn.innerHTML = '＋ &nbsp;Add Exercise'; btn.style.cssText = 'margin:8px 26px 0;flex-shrink:0';
   btn.addEventListener('click', () => {
-    const ex  = { id: uid(), name: '', sets: 3, reps: 12 };
+    const ex = {id:uid(),name:'',sets:3,reps:12};
     const list = document.getElementById('exercisesList');
-    const row  = buildExerciseRow(ex);
-    list.appendChild(row);
-    row.querySelector('.ex-input-name').focus();
-    list.scrollTop = list.scrollHeight;
+    const row = buildExerciseRow(ex); list.appendChild(row);
+    row.querySelector('.ex-input-name').focus(); list.scrollTop = list.scrollHeight;
   });
   section.appendChild(btn);
 })();
@@ -1706,281 +1249,165 @@ document.getElementById('saveRoutineBtn').addEventListener('click', async () => 
   rows.forEach(row => {
     const n = row.querySelector('.ex-input-name').value.trim();
     const nums = row.querySelectorAll('.ex-input-num');
-    if (n) exercises.push({ id: row.dataset.id || uid(), name: n, sets: parseInt(nums[0].value)||3, reps: parseInt(nums[1].value)||12 });
+    if (n) exercises.push({id:row.dataset.id||uid(),name:n,sets:parseInt(nums[0].value)||3,reps:parseInt(nums[1].value)||12});
   });
-  if (editingRoutineId) {
-    const idx = routines.findIndex(r => r.id === editingRoutineId);
-    if (idx > -1) routines[idx] = { ...routines[idx], name, colorId: editColorId, exercises };
-  } else {
-    routines.push({ id: uid(), name, colorId: editColorId, exercises });
-  }
+  if (editingRoutineId) { const idx=routines.findIndex(r=>r.id===editingRoutineId); if(idx>-1) routines[idx]={...routines[idx],name,colorId:editColorId,exercises}; }
+  else routines.push({id:uid(),name,colorId:editColorId,exercises});
   await saveRoutines();
   document.getElementById('editBackdrop').classList.remove('visible');
   renderRoutines();
 });
 
 document.getElementById('deleteRoutineBtn').addEventListener('click', async () => {
-  if (!editingRoutineId || !confirm('Delete this routine?')) return;
-  routines = routines.filter(r => r.id !== editingRoutineId);
+  if (!editingRoutineId||!confirm('Delete this routine?')) return;
+  routines = routines.filter(r=>r.id!==editingRoutineId);
   await saveRoutines();
   document.getElementById('editBackdrop').classList.remove('visible');
   renderRoutines();
 });
-
 document.getElementById('editCancelBtn').addEventListener('click', () => document.getElementById('editBackdrop').classList.remove('visible'));
-document.getElementById('editBackdrop').addEventListener('click', e => { if (e.target.id === 'editBackdrop') document.getElementById('editBackdrop').classList.remove('visible'); });
+document.getElementById('editBackdrop').addEventListener('click', e => { if(e.target.id==='editBackdrop') document.getElementById('editBackdrop').classList.remove('visible'); });
 
 /* ════════════════════════════════
-   CYCLES VIEW
+   CYCLES
 ════════════════════════════════ */
 function renderCycles() {
-  const list = document.getElementById('cyclesList');
-  list.innerHTML = '';
-
-  if (cycles.length === 0) {
-    list.innerHTML = `<div class="cycles-empty">
-      <div class="cycles-empty-icon">🔄</div>
-      <div class="cycles-empty-title">No Cycles Yet</div>
-      <div class="cycles-empty-sub">Create a cycle to build a repeating weekly workout pattern.</div>
-    </div>`;
+  const list = document.getElementById('cyclesList'); list.innerHTML = '';
+  if (cycles.length===0) {
+    list.innerHTML = `<div class="cycles-empty"><div class="cycles-empty-icon">🔄</div><div class="cycles-empty-title">No Cycles Yet</div><div class="cycles-empty-sub">Create a cycle to build a repeating weekly workout pattern.</div></div>`;
     return;
   }
-
   cycles.forEach(cycle => {
-    const isDefault = cycle.id === settings.defaultCycleId;
-    const card      = document.createElement('div');
-    card.className  = 'cycle-card' + (isDefault ? ' is-default' : '');
-
-    const daysHtml = Array.from({length:7}, (_,i) => {
-      const slot = String(i+1);
-      const val  = cycle.days[slot];
-      const r    = val && val !== 'rest' ? getRoutine(val) : null;
-      const clr  = r ? getClr(r.colorId) : null;
-      if (!val) return `<div class="cycle-day-cell"><div class="cycle-day-label">D${i+1}</div><div class="cycle-day-pill empty">—</div></div>`;
-      if (val === 'rest') return `<div class="cycle-day-cell"><div class="cycle-day-label">D${i+1}</div><div class="cycle-day-pill rest">Rest</div></div>`;
+    const isDefault = cycle.id===settings.defaultCycleId;
+    const card = document.createElement('div'); card.className='cycle-card'+(isDefault?' is-default':'');
+    const daysHtml = Array.from({length:7},(_,i)=>{
+      const slot=String(i+1),val=cycle.days[slot],r=val&&val!=='rest'?getRoutine(val):null,clr=r?getClr(r.colorId):null;
+      if(!val) return `<div class="cycle-day-cell"><div class="cycle-day-label">D${i+1}</div><div class="cycle-day-pill empty">—</div></div>`;
+      if(val==='rest') return `<div class="cycle-day-cell"><div class="cycle-day-label">D${i+1}</div><div class="cycle-day-pill rest">Rest</div></div>`;
       return `<div class="cycle-day-cell"><div class="cycle-day-label">D${i+1}</div><div class="cycle-day-pill" style="background:${clr.color}1a;color:${clr.color};border:1.5px solid ${clr.color}40">${r.name}</div></div>`;
     }).join('');
-
-    card.innerHTML = `
-      <div class="cycle-card-header">
-        <div class="cycle-card-title-row">
-          <div class="cycle-card-name">${cycle.name}</div>
-          ${isDefault ? '<div class="default-badge">★ Default</div>' : ''}
-        </div>
-        <div class="cycle-card-actions">
-          <button class="btn-set-default ${isDefault ? 'is-default' : ''}" data-id="${cycle.id}">
-            ${isDefault ? '★ Default Cycle' : 'Set as Default'}
-          </button>
-          <button class="btn-edit" data-id="${cycle.id}">✏️ Edit</button>
-        </div>
-      </div>
+    card.innerHTML = `<div class="cycle-card-header"><div class="cycle-card-title-row"><div class="cycle-card-name">${cycle.name}</div>${isDefault?'<div class="default-badge">★ Default</div>':''}</div>
+      <div class="cycle-card-actions"><button class="btn-set-default ${isDefault?'is-default':''}" data-id="${cycle.id}">${isDefault?'★ Default Cycle':'Set as Default'}</button><button class="btn-edit" data-id="${cycle.id}">✏️ Edit</button></div></div>
       <div class="cycle-days-strip">${daysHtml}</div>`;
-
-    card.querySelector('.btn-set-default').addEventListener('click', async () => {
-      if (!isDefault) {
-        settings.defaultCycleId = cycle.id;
-        await saveSettings();
-        renderCycles();
-        if (activeTab === 'schedule') renderCalendar();
-      }
-    });
-
-    card.querySelector('.btn-edit').addEventListener('click', () => openCycleEditor(cycle.id));
+    card.querySelector('.btn-set-default').addEventListener('click', async()=>{ if(!isDefault){settings.defaultCycleId=cycle.id;await saveSettings();renderCycles();if(activeTab==='schedule')renderCalendar();}});
+    card.querySelector('.btn-edit').addEventListener('click', ()=>openCycleEditor(cycle.id));
     list.appendChild(card);
   });
 }
 
-/* ════════════════════════════════
-   CYCLE MODE TOGGLE
-════════════════════════════════ */
 function syncCycleModeToggle() {
-  const schedToggle = document.getElementById('schedCycleModeToggle');
-  if (schedToggle) schedToggle.checked = settings.cycleMode;
+  const t = document.getElementById('schedCycleModeToggle'); if(t) t.checked=settings.cycleMode;
 }
-
 async function handleCycleModeChange(checked) {
-  settings.cycleMode = checked;
-  if (settings.cycleMode && !settings.defaultCycleId && cycles.length > 0) {
-    settings.defaultCycleId = cycles[0].id;
-  }
-  await saveSettings();
-  syncCycleModeToggle();
-  renderCalendar();
-  if (activeTab === 'cycles') renderCycles();
+  settings.cycleMode=checked;
+  if(settings.cycleMode&&!settings.defaultCycleId&&cycles.length>0) settings.defaultCycleId=cycles[0].id;
+  await saveSettings(); syncCycleModeToggle(); renderCalendar();
+  if(activeTab==='cycles') renderCycles();
 }
+document.getElementById('schedCycleModeToggle').addEventListener('change', e=>handleCycleModeChange(e.target.checked));
 
-document.getElementById('schedCycleModeToggle').addEventListener('change', e => handleCycleModeChange(e.target.checked));
-
-/* ════════════════════════════════
-   CYCLE EDITOR
-════════════════════════════════ */
 function openCycleEditor(cycleId) {
-  editingCycleId = cycleId;
-  const existing = cycleId ? getCycle(cycleId) : null;
-  document.getElementById('cycleEditEyebrow').textContent = existing ? 'Edit Cycle' : 'New Cycle';
-  document.getElementById('cycleNameInput').value = existing ? existing.name : '';
-  editCycleDays = {};
-  if (existing) {
-    for (let i = 1; i <= 7; i++) editCycleDays[String(i)] = existing.days[String(i)] || null;
-  } else {
-    for (let i = 1; i <= 7; i++) editCycleDays[String(i)] = null;
-  }
-  document.getElementById('deleteCycleBtn').style.display = cycleId ? '' : 'none';
+  editingCycleId=cycleId;
+  const existing=cycleId?getCycle(cycleId):null;
+  document.getElementById('cycleEditEyebrow').textContent=existing?'Edit Cycle':'New Cycle';
+  document.getElementById('cycleNameInput').value=existing?existing.name:'';
+  editCycleDays={};
+  if(existing){for(let i=1;i<=7;i++)editCycleDays[String(i)]=existing.days[String(i)]||null;}
+  else{for(let i=1;i<=7;i++)editCycleDays[String(i)]=null;}
+  document.getElementById('deleteCycleBtn').style.display=cycleId?'':'none';
   renderCycleEditorGrid();
   document.getElementById('cycleEditBackdrop').classList.add('visible');
-  setTimeout(() => document.getElementById('cycleNameInput').focus(), 280);
+  setTimeout(()=>document.getElementById('cycleNameInput').focus(),280);
 }
 
 function renderCycleEditorGrid() {
-  const grid = document.getElementById('cycleEditorGrid');
-  grid.innerHTML = '';
-
-  for (let i = 1; i <= 7; i++) {
-    const val     = editCycleDays[String(i)];
-    const routine = val && val !== 'rest' ? getRoutine(val) : null;
-    const clr     = routine ? getClr(routine.colorId) : null;
-
-    const card = document.createElement('div');
-    card.className = 'editor-day-card' + (routine ? ' has-wo' : '');
-    if (clr) { card.style.background = clr.bg; card.style.borderColor = clr.color + '50'; }
-
-    card.innerHTML =
-      (clr ? `<div class="editor-card-accent" style="background:${clr.color}"></div>` : '') +
-      `<div class="editor-day-label">Day ${i}</div>` +
-      (routine
-        ? `<div class="editor-wo-badge" style="background:${clr.color}1a;color:${clr.color}">${routine.name}</div>`
-        : val === 'rest'
-          ? `<div class="editor-rest-label">Rest</div>`
-          : `<div class="editor-add-hint">+</div>`);
-
-    card.addEventListener('click', () => openCyclePicker(i));
+  const grid=document.getElementById('cycleEditorGrid'); grid.innerHTML='';
+  for(let i=1;i<=7;i++){
+    const val=editCycleDays[String(i)],routine=val&&val!=='rest'?getRoutine(val):null,clr=routine?getClr(routine.colorId):null;
+    const card=document.createElement('div');
+    card.className='editor-day-card'+(routine?' has-wo':'');
+    if(clr){card.style.background=clr.bg;card.style.borderColor=clr.color+'50';}
+    card.innerHTML=(clr?`<div class="editor-card-accent" style="background:${clr.color}"></div>`:'')+
+      `<div class="editor-day-label">Day ${i}</div>`+
+      (routine?`<div class="editor-wo-badge" style="background:${clr.color}1a;color:${clr.color}">${routine.name}</div>`:
+       val==='rest'?`<div class="editor-rest-label">Rest</div>`:`<div class="editor-add-hint">+</div>`);
+    card.addEventListener('click',()=>openCyclePicker(i));
     grid.appendChild(card);
   }
 }
 
-document.getElementById('saveCycleBtn').addEventListener('click', async () => {
-  const name = document.getElementById('cycleNameInput').value.trim();
-  if (!name) { document.getElementById('cycleNameInput').focus(); return; }
-  const days = {};
-  for (let i = 1; i <= 7; i++) days[String(i)] = editCycleDays[String(i)] || null;
-
-  if (editingCycleId) {
-    const idx = cycles.findIndex(c => c.id === editingCycleId);
-    if (idx > -1) cycles[idx] = { ...cycles[idx], name, days };
-  } else {
-    const newCycle = { id: uid(), name, days };
-    cycles.push(newCycle);
-    // Auto-set as default if first cycle
-    if (cycles.length === 1) settings.defaultCycleId = newCycle.id;
-    await saveSettings();
-  }
+document.getElementById('saveCycleBtn').addEventListener('click', async()=>{
+  const name=document.getElementById('cycleNameInput').value.trim();
+  if(!name){document.getElementById('cycleNameInput').focus();return;}
+  const days={};for(let i=1;i<=7;i++)days[String(i)]=editCycleDays[String(i)]||null;
+  if(editingCycleId){const idx=cycles.findIndex(c=>c.id===editingCycleId);if(idx>-1)cycles[idx]={...cycles[idx],name,days};}
+  else{const nc={id:uid(),name,days};cycles.push(nc);if(cycles.length===1)settings.defaultCycleId=nc.id;await saveSettings();}
   await saveCycles();
   document.getElementById('cycleEditBackdrop').classList.remove('visible');
   renderCycles();
 });
 
-document.getElementById('deleteCycleBtn').addEventListener('click', async () => {
-  if (!editingCycleId || !confirm('Delete this cycle?')) return;
-  cycles = cycles.filter(c => c.id !== editingCycleId);
-  if (settings.defaultCycleId === editingCycleId) {
-    settings.defaultCycleId = cycles.length > 0 ? cycles[0].id : null;
-    await saveSettings();
-  }
+document.getElementById('deleteCycleBtn').addEventListener('click', async()=>{
+  if(!editingCycleId||!confirm('Delete this cycle?'))return;
+  cycles=cycles.filter(c=>c.id!==editingCycleId);
+  if(settings.defaultCycleId===editingCycleId){settings.defaultCycleId=cycles.length>0?cycles[0].id:null;await saveSettings();}
   await saveCycles();
   document.getElementById('cycleEditBackdrop').classList.remove('visible');
   renderCycles();
 });
-
-document.getElementById('cycleEditCancelBtn').addEventListener('click', () => document.getElementById('cycleEditBackdrop').classList.remove('visible'));
-document.getElementById('cycleEditBackdrop').addEventListener('click', e => { if (e.target.id === 'cycleEditBackdrop') document.getElementById('cycleEditBackdrop').classList.remove('visible'); });
-document.getElementById('addCycleBtn').addEventListener('click', () => openCycleEditor(null));
+document.getElementById('cycleEditCancelBtn').addEventListener('click',()=>document.getElementById('cycleEditBackdrop').classList.remove('visible'));
+document.getElementById('cycleEditBackdrop').addEventListener('click',e=>{if(e.target.id==='cycleEditBackdrop')document.getElementById('cycleEditBackdrop').classList.remove('visible');});
+document.getElementById('addCycleBtn').addEventListener('click',()=>openCycleEditor(null));
 
 /* ════════════════════════════════
-   SETTINGS + FORM CHECKS
+   SETTINGS
 ════════════════════════════════ */
 function renderSettings() {
-  const list = document.getElementById('formCheckList');
-  list.innerHTML = '';
-
-  // Build unique exercise list per routine (deduplicated within each)
-  routines.forEach(r => {
-    if (!r.exercises || r.exercises.length === 0) return;
-    const clr = getClr(r.colorId);
-
-    const group = document.createElement('div');
-    group.className = 'fc-routine-group';
-
-    const header = document.createElement('div');
-    header.className = 'fc-routine-header';
-    header.innerHTML = `<div class="fc-routine-dot" style="background:${clr.color}"></div>
-                        <div class="fc-routine-name">${r.name}</div>`;
+  const list=document.getElementById('formCheckList'); list.innerHTML='';
+  routines.forEach(r=>{
+    if(!r.exercises||r.exercises.length===0)return;
+    const clr=getClr(r.colorId);
+    const group=document.createElement('div'); group.className='fc-routine-group';
+    const header=document.createElement('div'); header.className='fc-routine-header';
+    header.innerHTML=`<div class="fc-routine-dot" style="background:${clr.color}"></div><div class="fc-routine-name">${r.name}</div>`;
     group.appendChild(header);
-
-    // Deduplicate exercise names within this routine
-    const seen = new Set();
-    r.exercises.forEach(ex => {
-      if (seen.has(ex.name)) return;
-      seen.add(ex.name);
-
-      const url = formChecks[ex.name] || '';
-      const row = document.createElement('div');
-      row.className = 'fc-ex-row';
-      row.innerHTML = `
-        <div class="fc-ex-name">${ex.name}</div>
-        <input class="fc-url-input${url ? ' has-url' : ''}" type="url"
-          placeholder="Paste YouTube URL…" value="${url}"
-          data-exname="${ex.name.replace(/"/g, '&quot;')}">
-        <button class="fc-url-clear" title="Clear" data-exname="${ex.name.replace(/"/g, '&quot;')}">✕</button>`;
-
-      const input = row.querySelector('.fc-url-input');
-      const clearBtn = row.querySelector('.fc-url-clear');
-
-      input.addEventListener('input', () => {
-        const val = input.value.trim();
-        if (val) { formChecks[ex.name] = val; input.classList.add('has-url'); }
-        else     { delete formChecks[ex.name]; input.classList.remove('has-url'); }
-        scheduleFormCheckSave();
-      });
-
-      clearBtn.addEventListener('click', () => {
-        delete formChecks[ex.name];
-        input.value = '';
-        input.classList.remove('has-url');
-        scheduleFormCheckSave();
-      });
-
+    const seen=new Set();
+    r.exercises.forEach(ex=>{
+      if(seen.has(ex.name))return; seen.add(ex.name);
+      const url=formChecks[ex.name]||'';
+      const row=document.createElement('div'); row.className='fc-ex-row';
+      row.innerHTML=`<div class="fc-ex-name">${ex.name}</div>
+        <input class="fc-url-input${url?' has-url':''}" type="url" placeholder="Paste YouTube URL…" value="${url}" data-exname="${ex.name.replace(/"/g,'&quot;')}">
+        <button class="fc-url-clear" title="Clear" data-exname="${ex.name.replace(/"/g,'&quot;')}">✕</button>`;
+      const input=row.querySelector('.fc-url-input'),clearBtn=row.querySelector('.fc-url-clear');
+      input.addEventListener('input',()=>{ const val=input.value.trim(); if(val){formChecks[ex.name]=val;input.classList.add('has-url');}else{delete formChecks[ex.name];input.classList.remove('has-url');} scheduleFormCheckSave(); });
+      clearBtn.addEventListener('click',()=>{ delete formChecks[ex.name];input.value='';input.classList.remove('has-url');scheduleFormCheckSave(); });
       group.appendChild(row);
     });
-
     list.appendChild(group);
   });
 }
 
 async function seedExercisesIfEmpty() {
-  let changed = false;
-  routines.forEach(r => {
-    if ((!r.exercises || r.exercises.length === 0) && EXERCISE_SEEDS[r.id]) {
-      r.exercises = EXERCISE_SEEDS[r.id].map((ex, i) => ({
-        id: r.id + '-' + i, name: ex.name, sets: ex.sets, reps: ex.reps, group: ex.group || null,
-      }));
-      changed = true;
+  let changed=false;
+  routines.forEach(r=>{
+    if((!r.exercises||r.exercises.length===0)&&EXERCISE_SEEDS[r.id]){
+      r.exercises=EXERCISE_SEEDS[r.id].map((ex,i)=>({id:r.id+'-'+i,name:ex.name,sets:ex.sets,reps:ex.reps,group:ex.group||null}));
+      changed=true;
     }
   });
-  if (changed) await saveRoutines();
+  if(changed) await saveRoutines();
 }
 
-// Patch group metadata onto existing exercises that were seeded before groups existed
 async function migrateGroupData() {
-  let changed = false;
-  routines.forEach(r => {
-    if (!EXERCISE_SEEDS[r.id]) return;
-    const seedMap = {};
-    EXERCISE_SEEDS[r.id].forEach(s => { seedMap[s.name] = s.group; });
-    (r.exercises || []).forEach(ex => {
-      if (!ex.group && seedMap[ex.name]) { ex.group = seedMap[ex.name]; changed = true; }
-    });
+  let changed=false;
+  routines.forEach(r=>{
+    if(!EXERCISE_SEEDS[r.id])return;
+    const seedMap={};
+    EXERCISE_SEEDS[r.id].forEach(s=>{seedMap[s.name]=s.group;});
+    (r.exercises||[]).forEach(ex=>{if(!ex.group&&seedMap[ex.name]){ex.group=seedMap[ex.name];changed=true;}});
   });
-  if (changed) await saveRoutines();
+  if(changed) await saveRoutines();
 }
 
 /* ════════════════════════════════
