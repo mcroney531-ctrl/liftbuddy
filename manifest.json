@@ -1,0 +1,25 @@
+{
+  "name": "LiftBuddy",
+  "short_name": "LiftBuddy",
+  "description": "Personal workout tracker",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0d1f3c",
+  "background_color": "#0d1f3c",
+  "start_url": "./",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
